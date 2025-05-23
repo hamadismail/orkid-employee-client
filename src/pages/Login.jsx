@@ -37,13 +37,13 @@ const Login = () => {
               Swal.fire({
                 position: "top",
                 icon: "success",
-                title: "Your account is created.",
+                title: "Successfully loged in",
                 showConfirmButton: false,
                 timer: 1500,
               });
             }
-            navigate("/");
           });
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
