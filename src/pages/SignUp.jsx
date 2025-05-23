@@ -41,7 +41,7 @@ const SignUp = () => {
         };
 
         // save profile info in the db
-        fetch("http://localhost:3000/employee", {
+        fetch("https://orkid-employe-server.vercel.app/employee", {
           method: "POST",
           headers: {
             "content-type": "application/json",

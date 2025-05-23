@@ -24,7 +24,7 @@ const Login = () => {
           lastSignInTime: result.user?.metadata?.lastSignInTime,
         };
         // update last sign in to the database
-        fetch("http://localhost:3000/employee", {
+        fetch("https://orkid-employe-server.vercel.app/employee", {
           method: "PATCH",
           headers: {
             "content-type": "application/json",

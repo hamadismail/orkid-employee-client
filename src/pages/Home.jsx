@@ -1,5 +1,3 @@
-import { FaPhoneAlt, FaMapMarkerAlt, FaStar } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import Testimonials from "../components/Testimonials";
 import bannerImg from "../assets/banner.jpg";
 

@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "logs",
-        loader: () => fetch("http://localhost:3000/employee"),
+        loader: () => fetch("https://orkid-employe-server.vercel.app/employee"),
         hydrateFallbackElement: <Spinner />,
         Component: UserLogs,
       },
