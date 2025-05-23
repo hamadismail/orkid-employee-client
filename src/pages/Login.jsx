@@ -6,9 +6,7 @@ import Swal from "sweetalert2";
 import Spinner from "../components/ui/Spinner";
 
 const Login = () => {
-  // const { logIn, loader, setLoader, googleLogIn } = use(AuthContext);
   const navigate = useNavigate();
-  // const location = useLocation();
   const [err, setErr] = useState("");
   const { logIn, loader, setLoader } = use(AuthContext);
 
@@ -50,6 +48,7 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         // const errorMessage = error.message;
+        setErr("Invalid Creadentials");
         // alert(errorCode);
         Swal.fire({
           position: "top",

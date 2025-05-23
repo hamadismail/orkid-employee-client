@@ -32,6 +32,9 @@ const Header = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
+      <li>
+        <NavLink to="/logs">User Logs</NavLink>
+      </li>
     </>
   );
 
@@ -79,7 +82,7 @@ const Header = () => {
         <div className="navbar-end">
           {user ? (
             <div className="flex items-center gap-2">
-              <div>{user.email}</div>
+              <div className="max-md:hidden">{user.email}</div>
               <button
                 onClick={handleLogOut}
                 className="btn rounded-lg bg-neutral text-neutral-content"

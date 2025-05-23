@@ -2,13 +2,12 @@ import React, { use, useState } from "react";
 import hobbyImg from "../assets/orkid.png";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
-// import Swal from "sweetalert2";
 import Spinner from "../components/ui/Spinner";
 import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [err, setErr] = useState("");
-  const { user, setUser, loader, setLoader, signUp } = use(AuthContext);
+  const { loader, setLoader, signUp } = use(AuthContext);
   const navigate = useNavigate();
 
   const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
