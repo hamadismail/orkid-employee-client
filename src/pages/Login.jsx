@@ -17,10 +17,9 @@ const Login = () => {
       <div className="flex flex-col justify-center items-center p-10">
         <img src={hobbyImg} alt="Orkid Employee" className="w-3/4 md:w-2/4" />
         <div className="text-center mt-6">
-          <h2 className="text-2xl font-semibold">Hobby Hub</h2>
+          <h2 className="text-2xl font-semibold">Orkid Employee</h2>
           <p className="text-sm text-base-content mt-2 max-w-xs mx-auto">
-            Discover and join local hobby groups — from book clubs to hiking
-            crews. Build communities around your passions.
+            Make sure your presence
           </p>
         </div>
       </div>
@@ -30,8 +29,8 @@ const Login = () => {
         {/* Logo */}
         <h1 className="text-3xl font-semibold mb-4">
           <span className="inline-block mr-1">⚽</span>
-          <span className="font-bold">Hobby</span>
-          <span className="text-success font-light"> HUB</span>
+          <span className="font-bold">Orkid</span>
+          <span className="text-success font-light"> Employee</span>
         </h1>
 
         {/* Form */}
