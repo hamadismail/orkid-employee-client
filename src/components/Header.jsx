@@ -1,14 +1,24 @@
 import React, { use } from "react";
 import "../components/styles/header.css";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
+import Swal from "sweetalert2";
 
 const Header = () => {
-  const { user, logOut } = use(AuthContext);
+  const { user, setUser, logOut } = use(AuthContext);
+  const navigate = useNavigate();
   const handleLogOut = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Loged Out Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
         setUser(null);
         navigate("/");
       })

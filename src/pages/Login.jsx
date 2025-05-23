@@ -8,7 +8,7 @@ import Spinner from "../components/ui/Spinner";
 const Login = () => {
   // const { logIn, loader, setLoader, googleLogIn } = use(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const [err, setErr] = useState("");
   const { logIn, loader, setLoader } = use(AuthContext);
 
@@ -44,13 +44,13 @@ const Login = () => {
                 timer: 1500,
               });
             }
+            navigate("/");
           });
       })
       .catch((error) => {
         const errorCode = error.code;
         // const errorMessage = error.message;
         // alert(errorCode);
-        setLoader(false);
         Swal.fire({
           position: "top",
           icon: "error",
@@ -58,8 +58,11 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setLoader(false);
       });
   };
+
+  if (loader) return <Spinner />;
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-base-100">
