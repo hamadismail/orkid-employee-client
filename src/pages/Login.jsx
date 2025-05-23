@@ -1,8 +1,8 @@
 import React, { use, useState } from "react";
 import hobbyImg from "../assets/orkid.png";
 import { Link, useLocation, useNavigate } from "react-router";
-// import { AuthContext } from "../providers/AuthContext";
-// import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthContext";
+import Swal from "sweetalert2";
 import Spinner from "../components/ui/Spinner";
 
 const Login = () => {
@@ -10,6 +10,56 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [err, setErr] = useState("");
+  const { logIn, loader, setLoader } = use(AuthContext);
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // firebase sign in send
+    logIn(email, password)
+      .then((result) => {
+        const singInInfo = {
+          email,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
+        // update last sign in to the database
+        fetch("http://localhost:3000/employee", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(singInInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.matchedCount) {
+              Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Your account is created.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        // const errorMessage = error.message;
+        // alert(errorCode);
+        setLoader(false);
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: errorCode,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-base-100">
@@ -34,7 +84,7 @@ const Login = () => {
         </h1>
 
         {/* Form */}
-        <form className="max-w-md md:w-4/6">
+        <form onSubmit={handleSignIn} className="max-w-md md:w-4/6">
           <label className="form-control w-full mb-4">
             <span className="label-text mb-1">Email</span>
             <input
