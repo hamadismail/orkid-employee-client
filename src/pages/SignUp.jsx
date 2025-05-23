@@ -1,19 +1,84 @@
 import React, { use, useState } from "react";
 import hobbyImg from "../assets/orkid.png";
 import { Link, useNavigate } from "react-router";
-// import { AuthContext } from "../providers/AuthContext";
+import { AuthContext } from "../providers/AuthContext";
 // import Swal from "sweetalert2";
 import Spinner from "../components/ui/Spinner";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [err, setErr] = useState("");
-  // const { user, setUser, loader, setLoader, signUp, updateUser } =
-  //   use(AuthContext);
+  const { user, setUser, loader, setLoader, signUp } = use(AuthContext);
   const navigate = useNavigate();
 
-  // const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+  const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
-  // if (loader) return <Spinner />;
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const { email, password, ...restFormData } = Object.fromEntries(
+      formData.entries()
+    );
+
+    if (!regex.test(password)) {
+      setErr(
+        "Password must contain at least 1 uppercase letter, 1 lowercase letter, and be at least 6 characters long."
+      );
+      return;
+    } else {
+      setErr("");
+    }
+
+    // create user in the firebase
+    signUp(email, password)
+      .then((result) => {
+        const userProfile = {
+          email,
+          ...restFormData,
+          creationTime: result.user?.metadata?.creationTime,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
+
+        // save profile info in the db
+        fetch("http://localhost:3000/employee", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userProfile),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Your account is created.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        // const errorMessage = error.message;
+        // alert(errorCode);
+        setLoader(false);
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: errorCode,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
+  if (loader) return <Spinner />;
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-base-100">
@@ -42,7 +107,7 @@ const SignUp = () => {
         </h1>
 
         {/* Form */}
-        <form className="max-w-md md:w-4/6">
+        <form onSubmit={handleSignUp} className="max-w-md md:w-4/6">
           <label className="form-control w-full mb-4">
             <span className="label-text mb-1">Name</span>
             <input

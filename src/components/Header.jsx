@@ -1,9 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import "../components/styles/header.css";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../providers/AuthContext";
 
 const Header = () => {
-  const user = "";
+  const { user, logOut } = use(AuthContext);
   const handleLogOut = () => {
     logOut()
       .then(() => {

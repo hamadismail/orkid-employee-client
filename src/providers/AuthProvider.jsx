@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { auth } from "../firebase/firebase.init";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
