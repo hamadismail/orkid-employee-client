@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "atuh/signup",
+        path: "auth/signup",
         Component: SignUp,
       },
       {
